@@ -160,9 +160,29 @@ function sidebar_toggle() {
         </div>
         <div class="book-content">
           <div class="book-post">
-  
+  <h2 id="1-Maven-包引用">1. Maven 包引用</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.lucky&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;lucky-test-tool&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.1.3&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;&#x2F;scope&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="2-编写测试用例">2. 编写测试用例</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import org.junit.jupiter.api.Assertions;</span><br><span class="line">import org.junit.jupiter.api.BeforeAll;</span><br><span class="line">import org.junit.jupiter.api.DisplayName;</span><br><span class="line">import org.junit.jupiter.api.Test;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @author zhourj</span><br><span class="line"> * @date 2020&#x2F;8&#x2F;25 18:14</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class FastJunitTest &#123;</span><br><span class="line">	@BeforeAll</span><br><span class="line">	public static void setUp() &#123;</span><br><span class="line">		&#x2F;&#x2F; code that will be invoked when this test is instantiated</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">	@DisplayName(&quot;单元测试-Example-1&quot;)</span><br><span class="line">	public void exampleTest1() &#123;</span><br><span class="line">		Assertions.assertTrue(true);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">	@DisplayName(&quot;单元测试-Example-2&quot;)</span><br><span class="line">	public void exampleTest2() &#123;</span><br><span class="line">		Assertions.assertTrue(true);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-执行">3. 执行</h2>
+<ol>
+<li>IDEA -&gt; 类右键运行</li>
+<li><code>mvn test</code> pom 文件需要安装对应插件</li>
+</ol>
+<blockquote>
+<p><strong>目前 mvn 执行单测的插件在多种混合引擎下，testNg 用例有问题，建议先不要用！</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;&#x2F;project.build.sourceEncoding&gt;</span><br><span class="line">    &lt;jmockit.version&gt;1.49&lt;&#x2F;jmockit.version&gt;</span><br><span class="line">&lt;&#x2F;properties&gt;</span><br><span class="line">...</span><br><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;artifactId&gt;maven-compiler-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.8.1&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;artifactId&gt;maven-surefire-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.0.0-M5&lt;&#x2F;version&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;argLine&gt;</span><br><span class="line">                    -javaagent:$&#123;settings.localRepository&#125;&#x2F;org&#x2F;jmockit&#x2F;jmockit&#x2F;$&#123;jmockit.version&#125;&#x2F;jmockit-$&#123;jmockit.version&#125;.jar</span><br><span class="line">                &lt;&#x2F;argLine&gt;</span><br><span class="line">            &lt;&#x2F;configuration&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">    &lt;&#x2F;plugins&gt;</span><br><span class="line">&lt;&#x2F;build&gt;</span><br></pre></td></tr></table></figure>
 </div>
 
+
+  <div class="book-comments">
+    
+
+
+
+
+  </div>
 
 
 
@@ -182,7 +202,7 @@ function sidebar_toggle() {
       
         <figure
           class="avatar avatar-lg"
-          data-initial="j"
+          data-initial="z"
           style="background-color: #3b4351;">
         </figure>
       
@@ -190,7 +210,7 @@ function sidebar_toggle() {
 
     <!-- Author title -->
     <div class="author-title">
-      <div>jianbao</div>
+      <div>zhourj</div>
       <div>2020-09-15</div>
     </div>
   </div>
