@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/docs/favicon.png" />
+    
+
+    <title>
+        
+          MOCK - FASTJUNIT
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/docs/css/book.css">
+
+    
+<script src="/docs/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/docs/">
+    <img src="/docs/favicon.png">
+    <span>FASTJUNIT</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/docs/">概述</a></li>
+<li><a href="/docs/changelog">版本</a></li>
+<li><a href="/docs/test-basic/quick-start">快速开始</a></li>
+</ul>
+<h2 id="基础模块">基础模块</h2>
+<ul>
+<li><a href="/docs/test-basic/parameter-csv">参数化测试-CSV</a></li>
+<li><a href="/docs/test-basic/parameter-json">参数化测试-JSON</a></li>
+<li><a href="/docs/test-basic/mock">Mock</a></li>
+<li><a href="/docs/test-basic/assert">结果断言</a></li>
+</ul>
+<h2 id="数据库测试">数据库测试</h2>
+<ul>
+<li><a href="/docs/db/h2">H2</a></li>
+</ul>
+<h2 id="高级进阶">高级进阶</h2>
+<ul>
+<li>
+<p><a href="/docs/parallel/junit5-parallel">junit5-parallel</a></p>
+</li>
+<li>
+<p><a href="/docs/parallel/surefire-parallel">surefire-parallel</a></p>
+</li>
+<li>
+<p><a href="/docs/test-advance/shortcut-key">关于单测的 IDEA 快捷键</a></p>
+</li>
+</ul>
+<h2 id="测试报告">测试报告</h2>
+<ul>
+<li><a href="/docs/test-basic/jacoco-report">jacoco</a></li>
+</ul>
+<h2 id="修复问题">修复问题</h2>
+<ul>
+<li><a href="/docs/">list test</a></li>
+<li><a href="/docs/">blockquote position</a></li>
+</ul>
+<h2 id="书写格式样例-😎">书写格式样例 😎</h2>
+<ul>
+<li><a href="/docs/demo/render/markdown-it-demo">markdown-it demo</a></li>
+<li><a href="/docs/demo/render/katex-demo">katex demo</a></li>
+<li><a href="/docs/demo/render/footnotes-demo">footnotes demo</a></li>
+<li><a href="/docs/demo/render/md-container">markdown-container</a></li>
+</ul>
+
+</div>
+
+
+<script src="/docs/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h2 id="前言">前言</h2>
+<blockquote>
+<p>一个服务经常会关联多个其他服务来一起完成一项工作，而我们在写测试用例的时候是聚焦在某个小单元的业务上，所以外部的一些服务我们可以给他屏蔽掉。这边的屏蔽不是完全的不去管它，而是希望外部服务虽然没有真实触发，但是它可以模拟返回我们要的结果。<code>Mock</code> 就是用来帮助我们完成这个过程的。</p>
+</blockquote>
+<h2 id="1-Mocked">1. @Mocked</h2>
+<p>普通对象的 Mock 可以借助 @Mocked 完成。主要由 <strong>录制</strong>、<strong>回放</strong>、<strong>验证</strong> 三步骤完成，是对某个类的所有实例的所有方法进行完整的模拟方式。<br>
+<strong>针对类及所有实例的的整体模拟，未写录制的方法默认返回0 或 null。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被测试类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">say</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">say2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello World 2&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">staticSay</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Still hello world&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 针对类及所有实例的的整体模拟，未写录制的方法默认返回0，null等</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Mocked</span></span><br><span class="line">    App app;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSay</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//录制，定义被模拟的方法的返回值，可以录制多个行为，写在一个大括号里也可以，多个大括号隔开也可以</span></span><br><span class="line">        <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">            app.say();</span><br><span class="line">            result = <span class="string">&quot;say&quot;</span>;</span><br><span class="line">        &#125;&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//回放,调用模拟的方法</span></span><br><span class="line">        System.out.println(app.say()); <span class="comment">//say</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> App().say()); <span class="comment">//say</span></span><br><span class="line">        System.out.println(App.staticSay()); <span class="comment">//null</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//验证</span></span><br><span class="line">        <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">            <span class="comment">//验证say模拟方法被调用，且调用了2次</span></span><br><span class="line">            app.say();</span><br><span class="line">            times = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//验证staticSay模拟方法被调用，且调用了1次</span></span><br><span class="line">            App.staticSay();</span><br><span class="line">            times = <span class="number">1</span>;</span><br><span class="line">        &#125;&#125;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-Injectable">2. @Injectable</h2>
+<p>@Injectable 和 @Mocked 的方式很像，区别是 @Injectable 仅仅对当前实例进行模拟，而 @Mocked 是对所有实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppTest001</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 仅针对当前实例的整体模拟</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Injectable</span></span><br><span class="line">    App app;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSay</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//录制</span></span><br><span class="line">        <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">            app.say();</span><br><span class="line">            result = <span class="string">&quot;say&quot;</span>;</span><br><span class="line">        &#125;&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//回放</span></span><br><span class="line">        System.out.println(app.say()); <span class="comment">//say,模拟值</span></span><br><span class="line">        System.out.println(app.say2()); <span class="comment">//null，模拟默认值</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> App appNew = <span class="keyword">new</span> App();</span><br><span class="line">        System.out.println(appNew.say()); <span class="comment">//Hello World，未被模拟，方法实际值</span></span><br><span class="line">        System.out.println(App.staticSay()); <span class="comment">//Still hello world，未被模拟，方法实际值</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//验证</span></span><br><span class="line">        <span class="keyword">new</span> Verifications() &#123;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//验证say模拟方法被调用</span></span><br><span class="line">                app.say();</span><br><span class="line">                times = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            &#123;</span><br><span class="line">                appNew.say();</span><br><span class="line">                times = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//验证staticSay模拟方法被调用，且调用了1次</span></span><br><span class="line">                App.staticSay();</span><br><span class="line">                times = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-Expectations">3. Expectations</h2>
+<p>录制,带参数表示局部模拟【针对所有实例的局部模拟，具体到某个方法的模拟，其它方法不模拟】</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppTest002</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSay</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> App app = <span class="keyword">new</span> App();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//录制,带参数表示局部模拟【针对所有实例的局部模拟，具体到某个方法的模拟，其它方法不模拟】</span></span><br><span class="line">        <span class="keyword">new</span> Expectations(App.class) &#123;&#123;</span><br><span class="line">            app.say();</span><br><span class="line">            result = <span class="string">&quot;say&quot;</span>;</span><br><span class="line">        &#125;&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//回放</span></span><br><span class="line">        System.out.println(app.say()); <span class="comment">//say,模拟值</span></span><br><span class="line">        System.out.println(app.say2()); <span class="comment">//Hello World 2 ，未被模拟，方法实际值</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> App().say()); <span class="comment">//say,模拟值</span></span><br><span class="line">        System.out.println(App.staticSay()); <span class="comment">//Still hello world，未被模拟，方法实际值</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-MockUp">4. MockUp</h2>
+<p>局部模拟，不是简单的返回，可重写原有方法的逻辑，比较灵活，推荐使用。(静态方法也能用)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppTest003</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSay</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//局部模拟【针对所有实例的局部模拟，具体到某个方法的模拟，其它方法不模拟】</span></span><br><span class="line">       <span class="keyword">new</span> MockUp&lt;App&gt;(App.class)&#123;</span><br><span class="line">           <span class="meta">@Mock</span></span><br><span class="line">           <span class="function">String <span class="title">say</span><span class="params">()</span></span>&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="string">&quot;say&quot;</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">        <span class="comment">//回放</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> App().say()); <span class="comment">//say,模拟值</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> App().say2()); <span class="comment">//Hello World 2，未被模拟，方法实际值</span></span><br><span class="line">        System.out.println(App.staticSay()); <span class="comment">//Still hello world，未被模拟，方法实际值</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div>
+
+
+
+
+<script src="/docs/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure
+          class="avatar avatar-lg"
+          data-initial="z"
+          style="background-color: #3b4351;">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>zhourj</div>
+      <div>2020-09-16</div>
+    </div>
+  </div>
+
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/docs/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/docs/js/book.js"></script>

@@ -67,8 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <ul>
 <li><a href="/docs/test-basic/parameter-csv">参数化测试-CSV</a></li>
 <li><a href="/docs/test-basic/parameter-json">参数化测试-JSON</a></li>
-<li><a href="/docs/test-basic/mock-interface">接口-mock</a></li>
-<li><a href="/docs/test-basic/mock-static-method">静态方法-mock</a></li>
+<li><a href="/docs/test-basic/mock">Mock</a></li>
 <li><a href="/docs/test-basic/assert">结果断言</a></li>
 </ul>
 <h2 id="数据库测试">数据库测试</h2>
@@ -160,7 +159,32 @@ function sidebar_toggle() {
         </div>
         <div class="book-content">
           <div class="book-post">
-  
+  <h2 id="前言">前言</h2>
+<blockquote>
+<p>断言是单测环节中非常重要的一个环节，但是又容易被忽视掉。大部分人只判断了<code>结果有返回</code>|<code>方法没报错</code>，就认为这个用例成功了。其实方法没报错这只是最基本的要求，而我们的 <code>bug</code> 往往也不是整个方法用不了，而是里面的一些字段丢失或者有误。</p>
+</blockquote>
+<hr>
+<p><strong>注意项</strong></p>
+<ol>
+<li>结果对象的所有字段都要校验</li>
+<li>用例中的某些对象虽然被 mock 了，但是这些 mock 的对象具体接收到了哪些参数，也需要详细的做校验。</li>
+</ol>
+<h2 id="如何校验-mock-对象的参数">如何校验 mock 对象的参数</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 普通结果的断言</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Assertions.assertThat(restResponse).hasFieldOrPropertyWithValue(<span class="string">&quot;code&quot;</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* mock 对象的断言</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">new</span> Verifications() &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        SimpleDocVo vo;</span><br><span class="line">        PipelineJobJunit document;</span><br><span class="line">        EsClient.createDoc(vo = withCapture(), document = withCapture());</span><br><span class="line"></span><br><span class="line">        Assertions.assertThat(vo).extracting(simpleDocVo -&gt; StringUtil.isNotEmpty(simpleDocVo.getId()));</span><br><span class="line"></span><br><span class="line">        Assertions.assertThat(document)</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;pipelineJobId&quot;</span>, jenkinsJunitVo.getUapJobId())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;status&quot;</span>, jenkinsJunitVo.getStatus())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;allCoverage&quot;</span>, jenkinsJunitVo.getAllCoverage())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;newCoverage&quot;</span>, jenkinsJunitVo.getNewCoverage())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;testRun&quot;</span>, jenkinsJunitVo.getTestRun())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;testFailure&quot;</span>, jenkinsJunitVo.getTestFailure())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;testSkipped&quot;</span>, jenkinsJunitVo.getTestSkipped());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>上述代码的重点</strong></p>
+<blockquote>
+<p>捕捉 mock 对象的参数，赋值给某个变量，然后校验这个对象。</p>
+</blockquote>
+<p><code>EsClient.createDoc(vo = withCapture(), document = withCapture());</code></p>
+<h2 id="效率问题">效率问题</h2>
+<blockquote>
+<p>每个对象都校验代码很繁琐,感觉单测就是在写 <code>get</code>,<code>set</code> 方法。</p>
+</blockquote>
+<ul>
+<li><a href="/docs/test-advance/shortcut-key">利用 IDEA 的快捷方式</a>（如同时选中多个属性，同时操作多个属性等）</li>
+<li>合理利用参数化测试</li>
+</ul>
+
 </div>
 
 
@@ -191,7 +215,7 @@ function sidebar_toggle() {
     <!-- Author title -->
     <div class="author-title">
       <div>zhourj</div>
-      <div>2020-09-15</div>
+      <div>2020-09-16</div>
     </div>
   </div>
 

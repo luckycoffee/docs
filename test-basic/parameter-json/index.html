@@ -67,8 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <ul>
 <li><a href="/docs/test-basic/parameter-csv">参数化测试-CSV</a></li>
 <li><a href="/docs/test-basic/parameter-json">参数化测试-JSON</a></li>
-<li><a href="/docs/test-basic/mock-interface">接口-mock</a></li>
-<li><a href="/docs/test-basic/mock-static-method">静态方法-mock</a></li>
+<li><a href="/docs/test-basic/mock">Mock</a></li>
 <li><a href="/docs/test-basic/assert">结果断言</a></li>
 </ul>
 <h2 id="数据库测试">数据库测试</h2>
@@ -166,10 +165,10 @@ function sidebar_toggle() {
 </blockquote>
 <h2 id="JsonSource">@JsonSource</h2>
 <p>将 Json 数据直接写在代码里面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@ParameterizedTest</span><br><span class="line">@JsonSource(&quot;&#123;\&quot;key\&quot;:\&quot;value\&quot;&#125;&quot;)</span><br><span class="line">void singleObject(JsonNode jsonNode) &#123;</span><br><span class="line">    Assertions.assertTrue(jsonNode.get(&quot;key&quot;).asText().equals(&quot;value&quot;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ParameterizedTest</span></span><br><span class="line"><span class="meta">@JsonSource(&quot;&#123;\&quot;key\&quot;:\&quot;value\&quot;&#125;&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">singleObject</span><span class="params">(JsonNode jsonNode)</span> </span>&#123;</span><br><span class="line">    Assertions.assertTrue(jsonNode.get(<span class="string">&quot;key&quot;</span>).asText().equals(<span class="string">&quot;value&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="JsonFileSource">@JsonFileSource</h2>
 <p>将 Json 数据直接写在文件上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@ParameterizedTest</span><br><span class="line">@JsonFileSource(resources &#x3D; &quot;&#x2F;data&#x2F;single-object.json&quot;)</span><br><span class="line">void singleObject(JsonNode jsonNode) &#123;</span><br><span class="line">    Assertions.assertTrue(jsonNode.get(&quot;key&quot;).asText().equals(&quot;value&quot;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ParameterizedTest</span></span><br><span class="line"><span class="meta">@JsonFileSource(resources = &quot;/data/single-object.json&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">singleObject</span><span class="params">(JsonNode jsonNode)</span> </span>&#123;</span><br><span class="line">    Assertions.assertTrue(jsonNode.get(<span class="string">&quot;key&quot;</span>).asText().equals(<span class="string">&quot;value&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </div>
 
 
