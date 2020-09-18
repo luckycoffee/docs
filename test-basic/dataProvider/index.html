@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/docs/favicon.png" />
+    
+
+    <title>
+        
+          数据生成利器 - FASTJUNIT
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"> -->
+
+    <link rel="stylesheet" href="/docs/css/spectre.min.css">
+    <link rel="stylesheet" href="/docs/css/spectre-exp.min.css">
+    <link rel="stylesheet" href="/docs/css/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/docs/css/book.css">
+
+    
+<script src="/docs/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="/docs/js/tocbot.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css"> -->
+    <link rel="stylesheet" href="/docs/css/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="/docs/css/katex.min.css">
+
+    
+    
+<script src="/docs/js/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/docs/">
+    <img src="/docs/favicon.png">
+    <span>FASTJUNIT</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/docs/">概述</a></li>
+<li><a href="/docs/changelog">版本</a></li>
+<li><a href="/docs/test-basic/quick-start">快速开始</a></li>
+</ul>
+<h2 id="基础模块">基础模块</h2>
+<ul>
+<li><a href="/docs/test-basic/mock">Mock</a></li>
+<li><a href="/docs/test-basic/parameter-csv">参数化测试-CSV</a></li>
+<li><a href="/docs/test-basic/parameter-json">参数化测试-JSON</a></li>
+<li><a href="/docs/test-basic/assert">结果断言</a></li>
+<li><a href="/docs/test-basic/dataProvider">数据生成器</a></li>
+</ul>
+<h2 id="数据库测试">数据库测试</h2>
+<ul>
+<li><a href="/docs/db/h2">H2</a></li>
+</ul>
+<h2 id="高级进阶">高级进阶</h2>
+<ul>
+<li>
+<p><a href="/docs/parallel/junit5-parallel">junit5-parallel</a></p>
+</li>
+<li>
+<p><a href="/docs/parallel/surefire-parallel">surefire-parallel</a></p>
+</li>
+<li>
+<p><a href="/docs/test-advance/shortcut-key">关于单测的 IDEA 快捷键</a></p>
+</li>
+</ul>
+<h2 id="测试报告">测试报告</h2>
+<ul>
+<li><a href="/docs/test-basic/jacoco-report">Jacoco</a></li>
+</ul>
+<h2 id="修复问题">修复问题</h2>
+<ul>
+<li><a href="/docs/">list test</a></li>
+<li><a href="/docs/">blockquote position</a></li>
+</ul>
+<h2 id="书写格式样例-😎">书写格式样例 😎</h2>
+<ul>
+<li><a href="/docs/demo/render/markdown-it-demo">markdown-it demo</a></li>
+<li><a href="/docs/demo/render/katex-demo">katex demo</a></li>
+<li><a href="/docs/demo/render/footnotes-demo">footnotes demo</a></li>
+<li><a href="/docs/demo/render/md-container">markdown-container</a></li>
+</ul>
+
+</div>
+
+
+<script src="/docs/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h2 id="前言">前言</h2>
+<blockquote>
+<p>单测的时候，给对象造数据是一件比较繁琐的事情，这边提供了一个灵活的数据生成器。后面会在智能赋值方面增强，让参数更有意义。</p>
+</blockquote>
+<h2 id="1-基础类型生成">1. 基础类型生成</h2>
+<div class="attention">
+<p><em>下面列子的断言直接 System 输出，只是演示方便，所有的判断都不能依据人工判断！</em></p>
+</div>
+<h3 id="1-1-数值类型">1.1 数值类型</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">@DisplayName(&quot;数值数据提供工具测试&quot;)</span><br><span class="line">public void NumberTest()&#123;</span><br><span class="line">    System.out.println(&quot;无参数 Integer 测试：&quot; + DataProvider.Integer());</span><br><span class="line">    System.out.println(&quot;Integer 指定范围测试&quot; + DataProvider.Integer(5,10));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<div class="tip">
+<p>无参数 Integer 测试：2596<br>
+Integer 指定范围测试：9</p>
+</div>
+<h3 id="1-2-字符类型">1.2 字符类型</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">@DisplayName(&quot;字符数据提供工具测试&quot;)</span><br><span class="line">public void StringTest()&#123;</span><br><span class="line">    &#x2F;&#x2F; 没个定参数，默认 32</span><br><span class="line">    System.out.println(&quot;字符无参数测试：&quot; + DataProvider.String());</span><br><span class="line">    System.out.println(&quot;长度 10 的字符测试：&quot; + DataProvider.String(10));</span><br><span class="line">    System.out.println(&quot;长度 12 的字符测试：&quot; + DataProvider.String(12));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<div class="tip">
+<p>字符无参数测试：fSY8vqTDCsVdXHRGSksR9MZo0sfV9mlH<br>
+长度 10 的字符测试：iC0fMZnSRP<br>
+长度 12 的字符测试：HnvMHXGH4Jrv</p>
+</div>
+<h3 id="1-3-时间类型">1.3 时间类型</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">@DisplayName(&quot;时间数据提供工具测试&quot;)</span><br><span class="line">public void DateTest()&#123;</span><br><span class="line">    System.out.println(&quot;LocalDate：&quot; + DataProvider.LocalDate());</span><br><span class="line">    System.out.println(&quot;LocalDateTime：&quot; + DataProvider.LocalDateTime());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<div class="tip">
+<p>LocalDate：2020-09-18<br>
+LocalDateTime：2020-09-18T18:26:00.776</p>
+</div>
+<h2 id="2-复杂类型的赋值">2. 复杂类型的赋值</h2>
+<p>下面代码用到的 2 个 Bean 对象，模拟了我们通常的 Bean 结构，包含了嵌套 Bean 的自动赋值。</p>
+<div class="tip">
+<p>public class BeanObject implements Serializable {<br>
+private Long id;<br>
+private String name;<br>
+private Integer age;<br>
+private LocalDate birthDate;<br>
+private SubBeanObject car;<br>
+private List<SubBeanObject> friends;<br>
+private SubBeanObject[] girlFriends;</p>
+</div>
+<div class="tip">
+<p>public class SubBeanObject {<br>
+private String name;</p>
+</div>
+<h3 id="2-1-对象">2.1 对象</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BeanObject beanObject &#x3D; DataProvider.anyObject(BeanObject.class);</span><br><span class="line">System.out.println(&quot;anyObject：&quot; + JsonUtils.writeJsonStr(beanObject));</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anyObject：&#123;&quot;id&quot;:8362,&quot;name&quot;:&quot;OAFEhsgClNYepqJcXs9Iyl76B0ujPHce&quot;,&quot;age&quot;:9418,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;33IT4vaM6ActURy9mij88UZt2nXLtiKQ&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;ffpEPNVWTJnGHH6LAbBfHUwFvE6pTVIM&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;Worxxag1nDf29KERT1GdTgtGggwWeviR&quot;&#125;,&#123;&quot;name&quot;:&quot;Rvuq8f0V0xdhdxx9MC4EqHEknf40HlRF&quot;&#125;,&#123;&quot;name&quot;:&quot;XdARkSiXClgWD5qCtP2zpy41h6ygeDMd&quot;&#125;,&#123;&quot;name&quot;:&quot;x5QL1MOWGQToHdk2BLzgEMhFlKnbxm5f&quot;&#125;,&#123;&quot;name&quot;:&quot;aTqhCIrkhbzgddRF02UF3xyuxAvScQiz&quot;&#125;,&#123;&quot;name&quot;:&quot;H10j6S559VGdFxHRr9bNLXbrOwN4a9Tj&quot;&#125;,&#123;&quot;name&quot;:&quot;l9BPnC4RsjB3sVRSrdUUWXrgxykUVjnT&quot;&#125;,&#123;&quot;name&quot;:&quot;4SSamVfbd69qwJRz7UQ62PKkbPqkjB5V&quot;&#125;,&#123;&quot;name&quot;:&quot;3COLcU6H2tFRrB7ZMdYCl5WWJhC9A5qF&quot;&#125;,&#123;&quot;name&quot;:&quot;tG0frFv8T7AjtyuoqcTlH6qozZjX8d6o&quot;&#125;]&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-数组">2.2 数组</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BeanObject[] beanObjectArray &#x3D; DataProvider.anyArray(BeanObject.class);</span><br><span class="line">System.out.println(&quot;数组：&quot; + JsonUtils.writeJsonStr(beanObjectArray));</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">anyObject：&#123;&quot;id&quot;:8362,&quot;name&quot;:&quot;OAFEhsgClNYepqJcXs9Iyl76B0ujPHce&quot;,&quot;age&quot;:9418,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;33IT4vaM6ActURy9mij88UZt2nXLtiKQ&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;ffpEPNVWTJnGHH6LAbBfHUwFvE6pTVIM&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;Worxxag1nDf29KERT1GdTgtGggwWeviR&quot;&#125;,&#123;&quot;name&quot;:&quot;Rvuq8f0V0xdhdxx9MC4EqHEknf40HlRF&quot;&#125;,&#123;&quot;name&quot;:&quot;XdARkSiXClgWD5qCtP2zpy41h6ygeDMd&quot;&#125;,&#123;&quot;name&quot;:&quot;x5QL1MOWGQToHdk2BLzgEMhFlKnbxm5f&quot;&#125;,&#123;&quot;name&quot;:&quot;aTqhCIrkhbzgddRF02UF3xyuxAvScQiz&quot;&#125;,&#123;&quot;name&quot;:&quot;H10j6S559VGdFxHRr9bNLXbrOwN4a9Tj&quot;&#125;,&#123;&quot;name&quot;:&quot;l9BPnC4RsjB3sVRSrdUUWXrgxykUVjnT&quot;&#125;,&#123;&quot;name&quot;:&quot;4SSamVfbd69qwJRz7UQ62PKkbPqkjB5V&quot;&#125;,&#123;&quot;name&quot;:&quot;3COLcU6H2tFRrB7ZMdYCl5WWJhC9A5qF&quot;&#125;,&#123;&quot;name&quot;:&quot;tG0frFv8T7AjtyuoqcTlH6qozZjX8d6o&quot;&#125;]&#125;</span><br><span class="line">数组：[&#123;&quot;id&quot;:4239,&quot;name&quot;:&quot;SaY37uQK5UCILwt2srKexSAtxVhvo8Dl&quot;,&quot;age&quot;:5813,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;cVu0Ct1ghfJC7SBazZu6LQP18zlKY8xb&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;PMvhFUC0MKGuB1bfzytC8qQpNl36nBFt&quot;&#125;,&#123;&quot;name&quot;:&quot;pQ4ywrHHBBPaYxJtwemq2md2iXtJhOLU&quot;&#125;,&#123;&quot;name&quot;:&quot;b8xeaGM6imAp6TlSI7Pf1Wz72z50iIQa&quot;&#125;,&#123;&quot;name&quot;:&quot;Z68kCNSFrC7eImHcoY4yUfdgLwqCvEOg&quot;&#125;,&#123;&quot;name&quot;:&quot;PePs3ZoJwTMqw3FaCPXRHTeAaom75vky&quot;&#125;,&#123;&quot;name&quot;:&quot;UZeNovegnB3EM4oDOEO8c7Hdtr70A23G&quot;&#125;,&#123;&quot;name&quot;:&quot;Zqz5XSb8HmahIfm63pkAWoJPuczmMJDM&quot;&#125;,&#123;&quot;name&quot;:&quot;CIreAWVrwJ7fEXy4HEE7E7d8y74kkPip&quot;&#125;,&#123;&quot;name&quot;:&quot;cjtS4enH4e2Zq8K9wMueoT8UQCQZNjLH&quot;&#125;,&#123;&quot;name&quot;:&quot;xQZHOtzqWXpQhuUQeErx7QLeoQDhNDib&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;2cowLIMYlyV5PlfLJoZUytqGZwdfKhYb&quot;&#125;,&#123;&quot;name&quot;:&quot;3FHKnb4Qyzx7PncvVb7t85PLtU7RPTDF&quot;&#125;,&#123;&quot;name&quot;:&quot;Ty1ferSD6ZMYVMtFK3DyH9w6yddFXojE&quot;&#125;,&#123;&quot;name&quot;:&quot;qu1GEBCkYMLg7lprYMMygMSVJYdV2lqM&quot;&#125;,&#123;&quot;name&quot;:&quot;6BIR2GVRYR6mxtEf8gNKJaXaAfhSeuZh&quot;&#125;,&#123;&quot;name&quot;:&quot;MpRX1NzmQe3RA4713RFkvWQaBfWVHOcT&quot;&#125;]&#125;,&#123;&quot;id&quot;:61,&quot;name&quot;:&quot;yf1fT0fyQdX4n6oxttbYBDbao1hTJkvy&quot;,&quot;age&quot;:1506,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;1xL0SxXzQcCXJh6lrL5zBSlOFRwffB7S&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;envsQYpT0yiOQIUU4mVHDCV12OKnozBu&quot;&#125;,&#123;&quot;name&quot;:&quot;4uXeumsToOukVvgUx4H2cZJaou35N2u3&quot;&#125;,&#123;&quot;name&quot;:&quot;yOAXKLJkhbA1ydBjnC44Tqvg8vZDOiLF&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;aaTeJNs9B8JOal14x5j69Jsg6aknNdoV&quot;&#125;,&#123;&quot;name&quot;:&quot;m2EioHiVbEdk2Ma12QurUrhZWMsavV4t&quot;&#125;,&#123;&quot;name&quot;:&quot;R1jnsstgxJf8d7CToFHtDGJ6Kwp8AuMc&quot;&#125;,&#123;&quot;name&quot;:&quot;rKV1NMXA89mcJElQGcieq150fumH79rD&quot;&#125;,&#123;&quot;name&quot;:&quot;1La3DuPWC9ZoXGEtHjEdFsncsOYRoE9f&quot;&#125;,&#123;&quot;name&quot;:&quot;VbKv31Itacd0JCRR6R84mip60Gd9wYUm&quot;&#125;,&#123;&quot;name&quot;:&quot;IWHp6FmzdUFLkjH8FkU5XiFwf4zXsSO2&quot;&#125;,&#123;&quot;name&quot;:&quot;lGmDu78RQVkjT2J1Leg153rpestdgdj8&quot;&#125;]&#125;,&#123;&quot;id&quot;:7954,&quot;name&quot;:&quot;urwj4IwAooy33j4JxUQmh5jKReZWPldz&quot;,&quot;age&quot;:5493,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;8WWqGM93pgFTUnyNgf2waVTWQMaRmm0f&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;LaAsZ07o6L2XKhDZOBDyILuTjNTiHVtc&quot;&#125;,&#123;&quot;name&quot;:&quot;dZ4zcpQNgbLLCcj4yssaTSFUI4aPBc8a&quot;&#125;,&#123;&quot;name&quot;:&quot;BOIU8WKzOegkqdNH7SP3b343TIfEtlCw&quot;&#125;,&#123;&quot;name&quot;:&quot;3zlVZ7ZPS8EZ3sQcnES0BfXg6te9N77t&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;fC9CVeUsEuLSPnsUjfra8v1Zt2NYWBnP&quot;&#125;,&#123;&quot;name&quot;:&quot;MDhBadocKMysmQd35GXpXRN2r1VsBxc5&quot;&#125;]&#125;,&#123;&quot;id&quot;:6069,&quot;name&quot;:&quot;XrogWgeA76EzNdLqnp4vnjPWrwSqk5SH&quot;,&quot;age&quot;:7202,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;KDUklvbX1Nxw4DaX7JTSCs2G2EgcXOot&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;1vvSjIZ2xSTATQgeFjM6jHhfGNG3b5SW&quot;&#125;,&#123;&quot;name&quot;:&quot;JvxnBf9gXGbIXSFLQMc0P5jwSEyXVtqS&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;9MJnLyetW2L5mQFUCvefn6OllFhF8Cl3&quot;&#125;,&#123;&quot;name&quot;:&quot;OLLIbXV4jgRekcj5FrJrOHtS49HwjcGB&quot;&#125;,&#123;&quot;name&quot;:&quot;vu7Bdu8ZrJDSCqqz5SR0yVzfjvJq3365&quot;&#125;,&#123;&quot;name&quot;:&quot;blM8NI52QraejIedqIuvEKnUypQ4UCC3&quot;&#125;,&#123;&quot;name&quot;:&quot;8qgwW87zpJmvNfecE55qUDUwjQ8RZTBW&quot;&#125;,&#123;&quot;name&quot;:&quot;gupaTUGNtDgrRmKsyQMMPd2SKxsQlrQU&quot;&#125;,&#123;&quot;name&quot;:&quot;HfXXuZmsDp0RGZskmgYJUEZGjLisONcn&quot;&#125;,&#123;&quot;name&quot;:&quot;DtoseseIQavCsDBaG5fR7roz0MHesPTr&quot;&#125;]&#125;,&#123;&quot;id&quot;:4815,&quot;name&quot;:&quot;SdCpoJtC5rOJ3NpOJlSZyjVm9BUAcY5p&quot;,&quot;age&quot;:3671,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;3oTE7IZDnqGa548QS2HwZU0GhR5NtK9Z&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;UvpqLgDN50tvnWikoz6p4eAT9BPEE0Um&quot;&#125;,&#123;&quot;name&quot;:&quot;vYEgkd1kqgpwMaBpclTmVAFo4PdFNMgP&quot;&#125;,&#123;&quot;name&quot;:&quot;Oqmi7Or6mbfiHs0LzzbrHLNohxToENBr&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;yWqyORamxEXnqtr8ITCfqmuVdcVduvtQ&quot;&#125;,&#123;&quot;name&quot;:&quot;HLmnnj3K5nczTDu7mb7Q0Kqq8ikZpGBQ&quot;&#125;,&#123;&quot;name&quot;:&quot;BapDPThCmbLRLoYSFw70oJelpJMgUHG4&quot;&#125;,&#123;&quot;name&quot;:&quot;3l1oC3NuKkOPIAfcu36Tx3nZrWNKicjk&quot;&#125;,&#123;&quot;name&quot;:&quot;xE5Yt9nlQ9pKFCwwavINSMwatYBYfaRL&quot;&#125;,&#123;&quot;name&quot;:&quot;i4lSxgxHF2Wg0wNMOyfdKVRDj0ZXpp5K&quot;&#125;,&#123;&quot;name&quot;:&quot;NJjfL6s1VSBvvxZh9uHazJosrpmfHEhr&quot;&#125;,&#123;&quot;name&quot;:&quot;uLvRxyX43pC99Ut89zISbqdB0gGMFJWx&quot;&#125;,&#123;&quot;name&quot;:&quot;Lb4ShW0yumSaKfPrMvEHCnVStugRdQ32&quot;&#125;,&#123;&quot;name&quot;:&quot;vjGY553RtH7408WAZLIGm2bl3I6OVPV2&quot;&#125;]&#125;,&#123;&quot;id&quot;:7617,&quot;name&quot;:&quot;Uq49E6wZvhQZpYDQA4WTxiBn90BOntAH&quot;,&quot;age&quot;:2312,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;h5bm8MyFL6JfGtvmzMuFixGfwSLR54zA&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;bsELCrqSafJUuXDBOuJWgYD3HkOer3De&quot;&#125;,&#123;&quot;name&quot;:&quot;Wscg05OwiQWiOVC81BYSrLsmSFDPjAPz&quot;&#125;,&#123;&quot;name&quot;:&quot;0P4WMZAbZv6HeNvLLKBmCeSoNAdphVOT&quot;&#125;,&#123;&quot;name&quot;:&quot;HNjJZ6uIy2KivqJfhRiYinVyUxbUqFIJ&quot;&#125;,&#123;&quot;name&quot;:&quot;ZKLjdZvT85xQTgAeD210EGbJx8pUtV1y&quot;&#125;,&#123;&quot;name&quot;:&quot;n0GZMRfuXaajs5Mq3xhecm0AfkmDc6RV&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;X64Ot7iCiQL1Y62NXSTNdDvN5DZ3nsgF&quot;&#125;,&#123;&quot;name&quot;:&quot;rIYzOCM6NDBEPuO9UWbQZ6LI4zOoub2Y&quot;&#125;,&#123;&quot;name&quot;:&quot;cC6poGqtKy2vkEW0rFrHdJy0rNRKDWVW&quot;&#125;,&#123;&quot;name&quot;:&quot;ZvgQMLKxvCFGkqURSW67Yu2TFVlxVL5m&quot;&#125;,&#123;&quot;name&quot;:&quot;jOKAycj2XyKfEK80R9QhFMczQgKdgOyc&quot;&#125;,&#123;&quot;name&quot;:&quot;go8Afq1IKhl8vaopvLoz1J1ZAxuxvVDY&quot;&#125;,&#123;&quot;name&quot;:&quot;BFFMf1Gkkm9pUYeGoDl2T5dGzN1szjDx&quot;&#125;,&#123;&quot;name&quot;:&quot;6Uo836F1R32i8Z1HvG1tqYorP5dTYKoD&quot;&#125;]&#125;,&#123;&quot;id&quot;:558,&quot;name&quot;:&quot;SjZtTR9pDKaZevBZYv7yBiyEMrtY5YdW&quot;,&quot;age&quot;:7674,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;I7z6VePrnME2oUmDY1YuhuAFSMH68EBg&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;q24k2OOnTceXtkBiQFXm1aufGD15jSTV&quot;&#125;,&#123;&quot;name&quot;:&quot;ApsLN5TzLyFS9igrlH5dZz6halD0KGZT&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;Ds4r2Ws1gRxyLUKIzFlWmY6P16mZh9Il&quot;&#125;,&#123;&quot;name&quot;:&quot;YZpOq0ANW0Tm2UbYYpH8iW9yNh3YyK5y&quot;&#125;]&#125;,&#123;&quot;id&quot;:4527,&quot;name&quot;:&quot;iIiEwAglIdpXAti3Z9RDQazYxzQuehAW&quot;,&quot;age&quot;:4670,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;VnizmCVgTRXmmAEf5kbSsTtuCQofGirR&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;EGKkDylqNXgoCKdreSGkq0cxroFx4s3h&quot;&#125;,&#123;&quot;name&quot;:&quot;jrTOMsO4O4dwpn1DuWsdOxmH9KP7wefV&quot;&#125;,&#123;&quot;name&quot;:&quot;TgDVZChCd2ODGsw0d18tHnOEl6efcUv0&quot;&#125;,&#123;&quot;name&quot;:&quot;NdBmRmybH8noYsUKIhcfdZKZW0RMu4zF&quot;&#125;,&#123;&quot;name&quot;:&quot;clP2no6LEsUgjVj6xVctW6H4ZsAeOwYa&quot;&#125;,&#123;&quot;name&quot;:&quot;3qSydTdTHGCa85quxmoG6AVqNF7Svuip&quot;&#125;,&#123;&quot;name&quot;:&quot;tkrTKul1Ne7XdbR0TBQE2GHTKWxeVT3w&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;lJKvPWxLyFYa9aUwICGod3CTF4AoKA8z&quot;&#125;,&#123;&quot;name&quot;:&quot;Yc7EqJYeyuKJQ4e1jEu8UrK1IG79b9Sz&quot;&#125;,&#123;&quot;name&quot;:&quot;W4jvOf4OrzKSKtweVHNuIDPHHB5s0w6V&quot;&#125;,&#123;&quot;name&quot;:&quot;yeC83RW6Wj3AZPQgALISAFWGsKIqkJwC&quot;&#125;,&#123;&quot;name&quot;:&quot;bXjhPb8F9Ttd8dGcnIOhN2S2VwPXF7rC&quot;&#125;]&#125;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="2-3-列表">2.3 列表</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BeanObject[] beanObjectArray &#x3D; DataProvider.anyArray(BeanObject.class);</span><br><span class="line">System.out.println(&quot;数组：&quot; + JsonUtils.writeJsonStr(beanObjectArray));</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">列表：[&#123;&quot;id&quot;:6560,&quot;name&quot;:&quot;9hVUOkb330Bgd1hG1Y5vqNOnMFx4wlal&quot;,&quot;age&quot;:7974,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;2VayPyxWDZAgstr4CgBdNMRm1UTfL7NC&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;US8wh0mRW8xBkQcfUI0xTmJucpa6OSTX&quot;&#125;,&#123;&quot;name&quot;:&quot;nYOBCqA9u97OLWdgUosbwGueodwpiFIG&quot;&#125;,&#123;&quot;name&quot;:&quot;XInRSkerLxn09EQbvOXJTUChVNekBflu&quot;&#125;,&#123;&quot;name&quot;:&quot;aCIiCBMC2r8XH0DIt7MNDenifeKYsXbb&quot;&#125;,&#123;&quot;name&quot;:&quot;KV5femKqnlJxMFBacValDbbJQEBrKKJJ&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;lGDLKETA6sa6XJMZ3QIv2xFgKMnVd80B&quot;&#125;,&#123;&quot;name&quot;:&quot;JGcAUA632WZrHEmwmpQiGHzP0T0Q1nxD&quot;&#125;]&#125;,&#123;&quot;id&quot;:7251,&quot;name&quot;:&quot;pN5FKLlmwAnyGDieqXJGI079eoF0RuEy&quot;,&quot;age&quot;:1311,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;nAdFQv1RQAInG0cpTUW7IJ8npMAMrGQ6&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;6wlaOIisyazRsTJsMjDjErIsTFKd0nqW&quot;&#125;,&#123;&quot;name&quot;:&quot;KAxueqMVSTQX2QXh0JgoyQUUxtzDvuEC&quot;&#125;,&#123;&quot;name&quot;:&quot;rpFc1Nu5ygfJiUjHrZIkLPS5V4ueXDta&quot;&#125;,&#123;&quot;name&quot;:&quot;n4hGTQlT1ZnXVTK68zZyJd48T9IJrcHH&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;zuNSwJsudufZohd4qyGIaOGqI9kqjGzx&quot;&#125;,&#123;&quot;name&quot;:&quot;qlxMG0kw9UpzDemEDukMD2EIUA3UeDlS&quot;&#125;,&#123;&quot;name&quot;:&quot;Xiunzn7K1jnnM1upfSOoSt6iSbNL4JFM&quot;&#125;,&#123;&quot;name&quot;:&quot;gprZ1lCHpcUT1PIMSpvivCt4TgsObosM&quot;&#125;,&#123;&quot;name&quot;:&quot;cMUU3L1UPyRyip1yziTzxCanwyMaudp4&quot;&#125;,&#123;&quot;name&quot;:&quot;FKVm0rKlRteoKlGqqqIpaYdQTHgpU3xk&quot;&#125;,&#123;&quot;name&quot;:&quot;1epglX7DuOCGF6ZNhwx5lO5o34MNwM3F&quot;&#125;,&#123;&quot;name&quot;:&quot;YY0aZG8WUnyauuwfoN8dccjYufoqL9ls&quot;&#125;]&#125;,&#123;&quot;id&quot;:5069,&quot;name&quot;:&quot;Kp5tJHBuha2eORbGZA8YzlMcBHnicwW1&quot;,&quot;age&quot;:7972,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;wrK0QPmneKvz9FN7nSHuQiAZeNHl2Pmv&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;unpKt7STj7fkw3OqkYRW4Mkoyi0Pbhyu&quot;&#125;,&#123;&quot;name&quot;:&quot;NJCVl64Ppe4Kdomk10ySFIZlF5RuCWcz&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;HbCD9YVxJDAXYeEAx4jmuOq1uTLC8WfJ&quot;&#125;,&#123;&quot;name&quot;:&quot;HatVaoa4pNdhqeqUPsyk9fhqAYIKj1rd&quot;&#125;,&#123;&quot;name&quot;:&quot;WADtAOcDEduvMkscnXbOZ7iV48ssBcss&quot;&#125;,&#123;&quot;name&quot;:&quot;pB3T5Bxj1dvnLgoBkphIHyzDyfjXNHPr&quot;&#125;,&#123;&quot;name&quot;:&quot;6zC7e3Jq56OOq3OZJKSTJsybs2uli0YB&quot;&#125;,&#123;&quot;name&quot;:&quot;bT1SuigdiXE3RZ7hCB15ZhZWO6PO6DhD&quot;&#125;]&#125;,&#123;&quot;id&quot;:8472,&quot;name&quot;:&quot;ju1lWNm2IH4MiDN88mSgmE8efzFeOZhs&quot;,&quot;age&quot;:823,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;NNanjoieVt3FjxLSeKX5w4WEnKe0EfUe&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;En5erOi9TYfLRYztuqUp39JQpXgVePRH&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;pgJZ6toHopWPjQiToZ8NeNDzvc91Uotn&quot;&#125;,&#123;&quot;name&quot;:&quot;mosZxO4h11RlATtR7sgJTJ6aHpByGs7g&quot;&#125;,&#123;&quot;name&quot;:&quot;GBixMa9lZKLaD5KkFpkmT1Wy3HtzxJha&quot;&#125;,&#123;&quot;name&quot;:&quot;hQsaFJQdyS1bQ5fipxtqdXvyUCMVZexc&quot;&#125;,&#123;&quot;name&quot;:&quot;kBu3P43iqB4XniYsTYDc4rOW8Cj7hpc6&quot;&#125;,&#123;&quot;name&quot;:&quot;PFMqDdKVOvXAoToVr9SrOD6jBNP5sLcm&quot;&#125;,&#123;&quot;name&quot;:&quot;IqZbptrmewIUzgrtCDut1UJyUsZuvuBT&quot;&#125;,&#123;&quot;name&quot;:&quot;uZPHo0KPhkCSIDd0KGcYVn5HDbKAfrbi&quot;&#125;]&#125;,&#123;&quot;id&quot;:7365,&quot;name&quot;:&quot;TxZfzdVX6dhL0v3tYT79HmgtiLW2MNDp&quot;,&quot;age&quot;:300,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;JDfGvKVFz4cqeVxp193TnB9InTIyuvM7&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;OD2PPImE6MFh5Q4IBUnjyfOg0cXIdrkG&quot;&#125;,&#123;&quot;name&quot;:&quot;NGllqwnYjcItnsMqkkf5CCQMEhUoVgUi&quot;&#125;,&#123;&quot;name&quot;:&quot;TN7NzDZpBSZJTxW6Te5pOgOpYCnCqvh7&quot;&#125;,&#123;&quot;name&quot;:&quot;OjiSiTPHRHGDsXFz3RvbX5XJEJg6K6HL&quot;&#125;,&#123;&quot;name&quot;:&quot;Rrw9uKsz4HGnAkLJMgH5YlegGcK1PPwZ&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;WsWXybEoKaYMKVP1rkO0OYhSgTPk8fPI&quot;&#125;,&#123;&quot;name&quot;:&quot;A6zHoigw1yccHysl5OFGBiYc5Q0z1e5B&quot;&#125;,&#123;&quot;name&quot;:&quot;jcJr2q17wziQRvCYOvKxi7e0TPbG81L1&quot;&#125;,&#123;&quot;name&quot;:&quot;EskHFo12JnyS1dyHXpn5awMaLo8UjxFy&quot;&#125;,&#123;&quot;name&quot;:&quot;bO8vwbY0zIOMJ4yD12jiMP8EN79N7Fr7&quot;&#125;,&#123;&quot;name&quot;:&quot;QL1eloablpLnAfQlBrbT4bUEwj21QPkf&quot;&#125;,&#123;&quot;name&quot;:&quot;VLlULQ2LjE0Dy705YyDCpBDIAMLOJXtP&quot;&#125;]&#125;,&#123;&quot;id&quot;:3538,&quot;name&quot;:&quot;knFyGNxQdLo2wj4PrN4Oamg1M0hh658O&quot;,&quot;age&quot;:8890,&quot;birthDate&quot;:&#123;&quot;year&quot;:2020,&quot;month&quot;:&quot;SEPTEMBER&quot;,&quot;dayOfMonth&quot;:18,&quot;monthValue&quot;:9,&quot;dayOfWeek&quot;:&quot;FRIDAY&quot;,&quot;era&quot;:&quot;CE&quot;,&quot;dayOfYear&quot;:262,&quot;leapYear&quot;:true,&quot;chronology&quot;:&#123;&quot;id&quot;:&quot;ISO&quot;,&quot;calendarType&quot;:&quot;iso8601&quot;&#125;&#125;,&quot;car&quot;:&#123;&quot;name&quot;:&quot;gbW95GWQx0lugeWZvfdL8AMKS4UbkyZU&quot;&#125;,&quot;friends&quot;:[&#123;&quot;name&quot;:&quot;NBk1cGKnK6H4oQ8a8YjOl3ZhzzS2KORO&quot;&#125;,&#123;&quot;name&quot;:&quot;dQPDl81m040JX7DQP6HWwhxVxYnebrQX&quot;&#125;,&#123;&quot;name&quot;:&quot;79FCiX22l3xn0qWOUsZWI4LSaLYDaaQN&quot;&#125;,&#123;&quot;name&quot;:&quot;RxtBNpVt3YQOmgDUG7OjYavS8UWTCHUW&quot;&#125;,&#123;&quot;name&quot;:&quot;3dPlrOuxv0Jo1Zb8GqO5xT1lfA2IIi2G&quot;&#125;,&#123;&quot;name&quot;:&quot;OQ52YCiZxnkNa5b7qrR42PlYTqO4bVEi&quot;&#125;],&quot;girlFriends&quot;:[&#123;&quot;name&quot;:&quot;NePzfipOoR7Utfx97INIYhUiUeXyuZ4a&quot;&#125;,&#123;&quot;name&quot;:&quot;Lg9Wpy1kejukt3YOPop0c1AweoLeM4b6&quot;&#125;,&#123;&quot;name&quot;:&quot;ZCwCXGGGIggov931EEl00rs6zu0nTDnd&quot;&#125;,&#123;&quot;name&quot;:&quot;7bZWJbeITd3ap6qjZyPxUFYvzSmq3esx&quot;&#125;]&#125;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+
+
+
+<script src="/docs/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure
+          class="avatar avatar-lg"
+          data-initial="z"
+          style="background-color: #3b4351;">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>zhourj</div>
+      <div>2020-09-18</div>
+    </div>
+  </div>
+
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/docs/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/docs/js/book.js"></script>
