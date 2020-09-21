@@ -96,18 +96,16 @@ document.addEventListener('DOMContentLoaded', function () {
 <ul>
 <li><a href="/docs/test-basic/jacoco-report">Jacoco</a></li>
 </ul>
-<h2 id="修复问题">修复问题</h2>
-<ul>
-<li><a href="/docs/">list test</a></li>
-<li><a href="/docs/">blockquote position</a></li>
-</ul>
-<h2 id="书写格式样例-😎">书写格式样例 😎</h2>
-<ul>
-<li><a href="/docs/demo/render/markdown-it-demo">markdown-it demo</a></li>
-<li><a href="/docs/demo/render/katex-demo">katex demo</a></li>
-<li><a href="/docs/demo/render/footnotes-demo">footnotes demo</a></li>
-<li><a href="/docs/demo/render/md-container">markdown-container</a></li>
-</ul>
+<!-- ## 修复问题
+
+* [list test](/docs/)
+* [blockquote position](/docs/) -->
+<!-- ## 书写格式样例 8-)
+
+* [markdown-it demo](/docs/demo/render/markdown-it-demo)
+* [katex demo](/docs/demo/render/katex-demo)
+* [footnotes demo](/docs/demo/render/footnotes-demo)
+* [markdown-container](/docs/demo/render/md-container) -->
 
 </div>
 
@@ -165,7 +163,302 @@ function sidebar_toggle() {
         </div>
         <div class="book-content">
           <div class="book-post">
-  
+  <h2 id="前言">前言</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.h2database.com/html/main.html">H2数据库</a> 是一个开源的嵌入式数据库引擎，采用 java 语言编写，不受平台的限制，<br>
+能够支持标准的 SQL 语法，支持存储过程等。因此采用 H2 数据库作为开发期、测试期和演示的数据库非常方便，不过不太适合作为大规模生产数据库。</p>
+</blockquote>
+<p>H2 主要有如下三个用途：</p>
+<ul>
+<li>第一个用途，也是最常使用的用途就在于可以同应用程序打包在一起发布，这样可以非常方便地存储少量结构化数据。</li>
+<li>第二个用途是用于单元测试。启动速度快，而且可以关闭持久化功能，每一个用例执行完随即还原到初始状态。</li>
+<li>第三个用途是作为缓存，即当做内存数据库，作为 NoSQL 的一个补充。当某些场景下数据模型必须为关系型，可以拿它当 Memcached 使，作为后端 MySQL/Oracle 的一个缓冲层，缓存一些不经常变化但需要频繁访问的数据，比如字典表、权限表。</li>
+</ul>
+<p><strong>借助 H2 做持久层的单元测试是一个不错的方案</strong></p>
+<h2 id="1-简单-SQL-的测试">1 简单 SQL 的测试</h2>
+<p>我们提供了 H2DBUtil 工具类和 @H2DB 注解来直接执行 SQL 语句，只需要在 @H2DB 注解中定义好需要执行的 SQL 文件即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FunctionsTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@H2DB(value = &quot;/sql/testing.sql&quot;)</span></span><br><span class="line">    H2DBUtil h2DBUtil;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        h2DBUtil.executeQuery();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-Mybatis-持久层单测">2 Mybatis 持久层单测</h2>
+<blockquote>
+<p>由于我们的工具 SDK 没有引入 <code>Mybatis</code> 和 <code>Spring</code> 依赖，所以这个场景的工具还没有怎么封装。<br>
+对于持久层的单测，我们需要做一些配置，也就是将基于 MySQL 的 DataSource 转换成基于 H2 数据库的，以此来解耦对于 MySQL 的依赖。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@MapperScan(basePackages = &quot;com.lucky.example.infrastructure.*.mapper&quot;, sqlSessionFactoryRef = &quot;sqlSessionFactory&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MockDatabaseConfig</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean(name = &quot;sampleDataSource&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSource <span class="title">sampleDatasource</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MockDatabase.context.dataSource();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource(name = &quot;sampleDataSource&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> DataSource sampleDataSource;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean(name = &quot;transactionManager&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">transactionManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(sampleDataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean(name = &quot;sqlSessionFactory&quot;)</span></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">()</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SqlSessionFactoryBean bean = <span class="keyword">new</span> SqlSessionFactoryBean();</span><br><span class="line">        bean.setDataSource(sampleDataSource);</span><br><span class="line">        bean.setMapperLocations(</span><br><span class="line">                <span class="comment">// 设置mybatis的xml所在位置</span></span><br><span class="line">                <span class="keyword">new</span> PathMatchingResourcePatternResolver().getResources(<span class="string">&quot;classpath*:mapper/*.xml&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> bean.getObject();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">接着，我们把持久层的接口注入进来，就能进行持久层的单元测试了。</span><br><span class="line">```java</span><br><span class="line"><span class="meta">@Import(&#123;MockDatabaseConfig.class&#125;)</span></span><br><span class="line"><span class="meta">@ExtendWith(SpringExtension.class)</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@TestMethodOrder(MethodOrderer.OrderAnnotation.class)</span></span><br><span class="line"><span class="meta">@Rollback(false)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodsMapperTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    GoodsMapper goodsMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Order(1)</span></span><br><span class="line">    <span class="meta">@DisplayName(&quot;数据库单测用例 - 查询&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">select</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        GoodsPo goodsPo = <span class="keyword">new</span> GoodsPo(<span class="string">&quot;1&quot;</span>, <span class="string">&quot;张三&quot;</span>, <span class="string">&quot;sku-1&quot;</span>, <span class="number">10</span>);</span><br><span class="line">        GoodsPo result = goodsMapper.selectOne(goodsPo.getId());</span><br><span class="line">        Assertions.assertThat(result)</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;id&quot;</span>, goodsPo.getId())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;name&quot;</span>, goodsPo.getName())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;sku&quot;</span>, goodsPo.getSku())</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;inventory&quot;</span>, goodsPo.getInventory());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-H2-数据库对-MySQL-的函数扩展">3. H2 数据库对 MySQL 的函数扩展</h2>
+<blockquote>
+<p>虽然 H2 数据库能够支持标准的 SQL 语法，但对 Oracle/MySQL 中的内置函数却显得无能为力，比如 MD5()、TIMEDIFF() 等等。实际开发中，<br>
+我们无可避免会使用到一些内置函数，因此，我们扩展了一些常用的 MySQL 函数（Oracle/SQLServer 的数据库函数需自定义扩展），也支持用户<br>
+自定义扩展。</p>
+</blockquote>
+<h3 id="3-1-自定义扩展">3.1 自定义扩展</h3>
+<p>首先，用户需要定义一个 H2Function 实例，<b> function </b> 属性表示扩展的函数别称，比如 “MD5”；<b>fullClassName</b> 表示实现该函数的全类名路径 + 方法，比如 “com.lucky.ut.effective.h2.mysql.EncryptionFunctions.md5”。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">H2Function</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Mysql function alias，etc：version</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String function;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The full class name for this function implementation</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String fullClassName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再把定义好的实例添加到 com.lucky.ut.effective.h2.H2FunctionsLoader 的 H2_FUNCTIONS 集合内。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">H2FunctionsLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">final</span> Set&lt;H2Function&gt; H2_FUNCTIONS = <span class="keyword">new</span> CopyOnWriteArraySet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> h2Function</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(H2Function h2Function)</span> </span>&#123;</span><br><span class="line">        H2_FUNCTIONS.add(h2Function);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> collection</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addAll</span><span class="params">(Collection&lt;H2Function&gt; collection)</span> </span>&#123;</span><br><span class="line">        H2_FUNCTIONS.addAll(collection);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-目前已经扩展的-MySQL-函数列表">3.2 目前已经扩展的 MySQL 函数列表</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>扩展实现路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADDDATE</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.addDate</td>
+</tr>
+<tr>
+<td>ADDTIME</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.addTime</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.time</td>
+</tr>
+<tr>
+<td>UTC_TIMESTAMP</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.utcTimestamp</td>
+</tr>
+<tr>
+<td>UTC_DATE</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.utcDate</td>
+</tr>
+<tr>
+<td>UTC_TIME</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.utcTime</td>
+</tr>
+<tr>
+<td>FROM_DAYS</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.fromDays</td>
+</tr>
+<tr>
+<td>TO_DAYS</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.toDays</td>
+</tr>
+<tr>
+<td>TO_SECONDS</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.toSeconds</td>
+</tr>
+<tr>
+<td>TIME_TO_SEC</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.timeToSeconds</td>
+</tr>
+<tr>
+<td>DATE_FORMAT</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.dateFormat</td>
+</tr>
+<tr>
+<td>TIME_FORMAT</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.timeFormat</td>
+</tr>
+<tr>
+<td>LAST_DAY</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.lastDay</td>
+</tr>
+<tr>
+<td>MAKEDATE</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.makeDate</td>
+</tr>
+<tr>
+<td>MAKETIME</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.makeTime</td>
+</tr>
+<tr>
+<td>SEC_TO_TIME</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.secondsToTime</td>
+</tr>
+<tr>
+<td>SLEEP</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.sleep</td>
+</tr>
+<tr>
+<td>STR_TO_DATE</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.strToDate</td>
+</tr>
+<tr>
+<td>SUBDATE</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.subDate</td>
+</tr>
+<tr>
+<td>SUBTIME</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.subTime</td>
+</tr>
+<tr>
+<td>YEARWEEK</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.yearWeek</td>
+</tr>
+<tr>
+<td>WEEKOFYEAR</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.weekOfYear</td>
+</tr>
+<tr>
+<td>WEEKDAY</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.weekDay</td>
+</tr>
+<tr>
+<td>MICROSECOND</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.microSecond</td>
+</tr>
+<tr>
+<td>CONVERT_TZ</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.convertTZ</td>
+</tr>
+<tr>
+<td>PERIOD_ADD</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.periodAdd</td>
+</tr>
+<tr>
+<td>PERIOD_DIFF</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.periodDiff</td>
+</tr>
+<tr>
+<td>TIMEDIFF</td>
+<td>com.lucky.ut.effective.h2.mysql.DateTimeFunctions.timeDiff</td>
+</tr>
+<tr>
+<td>MD5</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.md5</td>
+</tr>
+<tr>
+<td>SHA1</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.sha1</td>
+</tr>
+<tr>
+<td>SHA</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.sha</td>
+</tr>
+<tr>
+<td>HEX</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.hex</td>
+</tr>
+<tr>
+<td>UNHEX</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.unhex</td>
+</tr>
+<tr>
+<td>PASSWORD</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.password</td>
+</tr>
+<tr>
+<td>TO_BASE64</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.base64</td>
+</tr>
+<tr>
+<td>FROM_BASE64</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.unbase64</td>
+</tr>
+<tr>
+<td>RANDOM_BYTES</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.randomBytes</td>
+</tr>
+<tr>
+<td>AES_ENCRYPT</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.aesEncrypt</td>
+</tr>
+<tr>
+<td>AES_DECRYPT</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.aesDecrypt</td>
+</tr>
+<tr>
+<td>CRC32</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.crc32</td>
+</tr>
+<tr>
+<td>CREATE_DIGEST</td>
+<td>com.lucky.ut.effective.h2.mysql.EncryptionFunctions.createDigest</td>
+</tr>
+<tr>
+<td>BIN</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.bin</td>
+</tr>
+<tr>
+<td>UUID_SHORT</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.uuidShort</td>
+</tr>
+<tr>
+<td>FIND_IN_SET</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.findInSet</td>
+</tr>
+<tr>
+<td>IS_IPV4</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.isIpv4</td>
+</tr>
+<tr>
+<td>IS_IPV6</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.isIpv6</td>
+</tr>
+<tr>
+<td>IS_UUID</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.isUUID</td>
+</tr>
+<tr>
+<td>REVERSE</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.reverse</td>
+</tr>
+<tr>
+<td>SUBSTRING_INDEX</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.subStringIndex</td>
+</tr>
+<tr>
+<td>STRCMP</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.strCmp</td>
+</tr>
+<tr>
+<td>CHARSET</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.charset</td>
+</tr>
+<tr>
+<td>FIELD</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.field</td>
+</tr>
+<tr>
+<td>MID</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.mid</td>
+</tr>
+<tr>
+<td>ORD</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.ord</td>
+</tr>
+<tr>
+<td>QUOTE</td>
+<td>com.lucky.ut.effective.h2.mysql.StringFunctions.quote</td>
+</tr>
+<tr>
+<td>POW</td>
+<td>com.lucky.ut.effective.h2.mysql.MathFunctions.pow</td>
+</tr>
+<tr>
+<td>CONV</td>
+<td>com.lucky.ut.effective.h2.mysql.MathFunctions.conv</td>
+</tr>
+<tr>
+<td>FORMAT</td>
+<td>com.lucky.ut.effective.h2.mysql.MiscFunctions.format</td>
+</tr>
+<tr>
+<td>VERSION</td>
+<td>com.lucky.ut.effective.h2.mysql.MiscFunctions.version</td>
+</tr>
+<tr>
+<td>CONNECTION_ID</td>
+<td>com.lucky.ut.effective.h2.mysql.MiscFunctions.connectId</td>
+</tr>
+<tr>
+<td>SESSION_USER</td>
+<td>com.lucky.ut.effective.h2.mysql.MiscFunctions.sessionUser</td>
+</tr>
+<tr>
+<td>SYSTEM_USER</td>
+<td>com.lucky.ut.effective.h2.mysql.MiscFunctions.sessionUser</td>
+</tr>
+<tr>
+<td>CURRENT_ROLE</td>
+<td>com.lucky.ut.effective.h2.mysql.MiscFunctions.currentRole</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 
 
