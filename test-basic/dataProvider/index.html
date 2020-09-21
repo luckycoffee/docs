@@ -167,6 +167,11 @@ function sidebar_toggle() {
 <blockquote>
 <p>单测的时候，给对象造数据是一件比较繁琐的事情，这边提供了一个灵活的数据生成器。后面会在智能赋值方面增强，让参数更有意义。</p>
 </blockquote>
+<p>支持类型</p>
+<ul>
+<li>基础类型：Integer,Float,Long，Double 普通类型： int，float,long,double 不支持,主要是为了规范开发。</li>
+<li>时间类型：LocalDate,LocalDateTime  普通类型：Date 不支持。</li>
+</ul>
 <h2 id="1-基础类型生成">1. 基础类型生成</h2>
 <div class="attention">
 <p><em>下面列子的断言直接 System 输出，只是演示方便，所有的判断都不能依据人工判断！</em></p>
@@ -200,10 +205,13 @@ LocalDateTime：2020-09-18T18:26:00.776</p>
 private Long id;<br>
 private String name;<br>
 private Integer age;<br>
+private Float cases;<br>
+private Double money;<br>
 private LocalDate birthDate;<br>
-private SubBeanObject car;<br>
-private List<SubBeanObject> friends;<br>
-private SubBeanObject[] girlFriends;</p>
+private SubBeanObject car;              // 自定义 Bean<br>
+private List<SubBeanObject> friends;    // 列表<br>
+private SubBeanObject[] girlFriends;    // 数组<br>
+private SexEnum sex;        // 枚举</p>
 </div>
 <div class="tip">
 <p>public class SubBeanObject {<br>
