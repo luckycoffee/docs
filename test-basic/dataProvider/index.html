@@ -167,14 +167,37 @@ function sidebar_toggle() {
 <blockquote>
 <p>单测的时候，给对象造数据是一件比较繁琐的事情，这边提供了一个灵活的数据生成器。后面会在智能赋值方面增强，让参数更有意义。</p>
 </blockquote>
-<p>支持类型</p>
-<ul>
-<li><strong>基础类型</strong>：Integer,Float,Long，Double,String <strong>普通类型</strong>： int，float,long,double 不支持 <code>主要是为了规范开发</code>。</li>
-<li><strong>时间类型</strong>：LocalDate,LocalDateTime  <strong>普通类型</strong>：Date 不支持。</li>
-<li>自定义 Bean</li>
-<li>数组，List</li>
-<li>枚举</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>支持类型</th>
+<th>对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础类型</td>
+<td>Integer,Float,Long,Double,String,Boolean,Byte</td>
+</tr>
+<tr>
+<td>时间类型</td>
+<td>LocalDate,LocalDateTime</td>
+</tr>
+<tr>
+<td>容器</td>
+<td>数组,List,Map,Set</td>
+</tr>
+<tr>
+<td>自定义Bean</td>
+<td>-</td>
+</tr>
+<tr>
+<td>枚举</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><code>int,float,long,double,date 等类型不支持，主要也是为了促进开发规范</code></p>
 <h2 id="1-基础类型生成">1. 基础类型生成</h2>
 <div class="attention">
 <p><em>下面列子的断言直接 System 输出，只是演示方便，所有的判断都不能依据人工判断！</em></p>
