@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/favicon.png" />
+    
+
+    <title>
+        
+          FASTJUNIT
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"> -->
+
+    <link rel="stylesheet" href="/css/spectre.min.css">
+    <link rel="stylesheet" href="/css/spectre-exp.min.css">
+    <link rel="stylesheet" href="/css/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/css/book.css">
+
+    
+<script src="/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="/js/tocbot.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css"> -->
+    <link rel="stylesheet" href="/css/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="/css/katex.min.css">
+
+    
+    
+<script src="/js/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/">
+    <img src="/favicon.png">
+    <span>FASTJUNIT</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/">概述</a></li>
+<li><a href="/changelog">版本</a></li>
+<li><a href="/test-basic/quick-start">快速开始</a></li>
+</ul>
+<h2 id="基础模块">基础模块</h2>
+<ul>
+<li><a href="/test-basic/mock">Mock</a></li>
+<li><a href="/test-basic/parameter-csv">参数化测试-CSV</a></li>
+<li><a href="/test-basic/parameter-json">参数化测试-JSON</a></li>
+<li><a href="/test-basic/assert">结果断言</a></li>
+<li><a href="/test-basic/dataProvider">数据生成器</a></li>
+</ul>
+<h2 id="数据库测试">数据库测试</h2>
+<ul>
+<li><a href="/db/h2">H2</a></li>
+</ul>
+<h2 id="高级进阶">高级进阶</h2>
+<ul>
+<li>
+<p><a href="/parallel/junit5-parallel">junit5-parallel</a></p>
+</li>
+<li>
+<p><a href="/parallel/surefire-parallel">surefire-parallel</a></p>
+</li>
+<li>
+<p><a href="/test-advance/shortcut-key">关于单测的 IDEA 快捷键</a></p>
+</li>
+</ul>
+<h2 id="测试报告">测试报告</h2>
+<ul>
+<li><a href="/test-basic/jacoco-report">Jacoco</a></li>
+</ul>
+<!-- ## 修复问题
+
+* [list test](/)
+* [blockquote position](/) -->
+<!-- ## 书写格式样例 8-)
+
+* [markdown-it demo](/demo/render/markdown-it-demo)
+* [katex demo](/demo/render/katex-demo)
+* [footnotes demo](/demo/render/footnotes-demo)
+* [markdown-container](/demo/render/md-container) -->
+
+</div>
+
+
+<script src="/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h2 id="前言">前言</h2>
+<p>单元测试中我们常常需要 Mock 一些测试数据，UT 提供了多种方式 ，包括 SQL 文件、yml、注解等。</p>
+<h2 id="Mock-数据">Mock 数据</h2>
+<h3 id="SQL-文件">SQL 文件</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for t_goods</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`t_goods`</span>;</span><br><span class="line"><span class="comment">-- 新建表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`t_goods`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`t_goods`</span>  (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">varchar</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;id&#x27;</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;商品名称&#x27;</span>,</span><br><span class="line">  <span class="string">`sku`</span> <span class="built_in">varchar</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;商品规格&#x27;</span>,</span><br><span class="line">  <span class="string">`inventory`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">&#x27;库存数量&#x27;</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">COMMENT</span> = <span class="string">&#x27;商品&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of t_goods</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`t_goods`</span> <span class="keyword">VALUES</span> (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;apple&#x27;</span>, <span class="string">&#x27;apple-10001&#x27;</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> FOREIGN_KEY_CHECKS = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>通过将 <strong>@SqlDateSet(value = “/data/t_goods.sql”)</strong> 注解放在测试类或测试方法上，即可在单元测试之前将 SQL 数据预置到 H2 数据库。</p>
+<h3 id="yml-文件">yml 文件</h3>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">testData:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">table:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">t_goods</span></span><br><span class="line">      <span class="attr">rows:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">row:</span></span><br><span class="line">            <span class="attr">columns:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">col:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">&#x27;id&#x27;</span></span><br><span class="line">                  <span class="attr">value:</span> <span class="string">&quot;1&quot;</span></span><br><span class="line">                  <span class="attr">isId:</span> <span class="literal">true</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">col:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">&#x27;name&#x27;</span></span><br><span class="line">                  <span class="attr">value:</span> <span class="string">&#x27;apple&#x27;</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">col:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">&#x27;sku&#x27;</span></span><br><span class="line">                  <span class="attr">value:</span> <span class="string">&#x27;apple-10001&#x27;</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">col:</span></span><br><span class="line">                  <span class="attr">name:</span> <span class="string">&#x27;inventory&#x27;</span></span><br><span class="line">                  <span class="attr">value:</span> <span class="string">&quot;100&quot;</span></span><br></pre></td></tr></table></figure>
+<p>通过将 <strong>@YmlDataSet({“/data/t_goods.yml”})</strong> 注解放在测试类或测试方法上，即可在单元测试之前将 yml 数据预置到 H2 数据库。</p>
+<p>这种方式，需要提前准备好数据库表结构，如果你的应用是 Spring 项目的话，可以使用 <strong>@Sql({“classpath:sql/goods.sql”})</strong> 注解来完成这个任务。</p>
+<h3 id="注解">注解</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DataSet(testData = &#123;</span></span><br><span class="line"><span class="meta">        @Table(name = &quot;t_goods&quot;, rows = &#123;</span></span><br><span class="line"><span class="meta">                @Row(columns = &#123;</span></span><br><span class="line"><span class="meta">                        @Col(name = &quot;id&quot;, value = &quot;1&quot;, isId = true),</span></span><br><span class="line"><span class="meta">                        @Col(name = &quot;name&quot;, value = &quot;apple&quot;),</span></span><br><span class="line"><span class="meta">                        @Col(name = &quot;sku&quot;, value = &quot;apple-10001&quot;),</span></span><br><span class="line"><span class="meta">                        @Col(name = &quot;inventory&quot;, value = &quot;100&quot;)</span></span><br><span class="line"><span class="meta">                &#125;)&#125;)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br></pre></td></tr></table></figure>
+<p>通过将 <strong>@DataSet</strong> 注解放在测试类或测试方法上，即可在单元测试之前将数据预置到 H2 数据库。</p>
+<p>这种方式，需要提前准备好数据库表结构，如果你的应用是 Spring 项目的话，可以使用 <strong>@Sql({“classpath:sql/goods.sql”})</strong> 注解来完成这个任务。</p>
+<h2 id="持久层单元测试">持久层单元测试</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@SqlDateSet(value = &quot;/data/t_goods.sql&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodsMapperSqlDateSetTest</span> <span class="keyword">extends</span> <span class="title">BaseMockDatabase</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    GoodsMapper goodsMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@DisplayName(&quot;数据库单测用例 - 查询&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">select</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        GoodsPo result = goodsMapper.selectOne(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        Assertions.assertThat(result)</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;1&quot;</span>)</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;apple&quot;</span>)</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;sku&quot;</span>, <span class="string">&quot;apple-10001&quot;</span>)</span><br><span class="line">                .hasFieldOrPropertyWithValue(<span class="string">&quot;inventory&quot;</span>, <span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@YmlDataSet、@DataSet 注解的用法与上例类似。</p>
+<p>如果在类上和方法上同时存在 @SqlDateSet（、@YmlDataSet、@DataSet） 注解，则以方法上为准。</p>
+
+</div>
+
+
+  <div class="book-comments">
+    
+
+
+
+
+  </div>
+
+
+
+<script src="/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure
+          class="avatar avatar-lg"
+          data-initial="L"
+          style="background-color: #3b4351;">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>LuckyCoffee</div>
+      <div>2020-10-19</div>
+    </div>
+  </div>
+
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4902ba6ac8db462e2617c9c1d40e3340";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+<script src="/js/book.js"></script>
